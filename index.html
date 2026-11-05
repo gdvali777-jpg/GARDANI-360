@@ -4,6 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Gardani 360° | Biograpi Living</title>
+<script>
+/* Drop Google ads / GTM Conversion Linker params from the address bar (no reload)
+   so a shared link stays short. Keeps lang and any other non-tracking query, and the hash.
+   Runs before the logo script, which still reads ?lang= from location.search. */
+(function () {
+  try {
+    var search = location.search;
+    if (!search || search.length < 2 || !history.replaceState) return;
+    var parts = search.substring(1).split("&");
+    var keep = [];
+    var dropped = false;
+    for (var i = 0; i < parts.length; i++) {
+      if (!parts[i]) continue;
+      var eq = parts[i].indexOf("=");
+      var key = (eq < 0 ? parts[i] : parts[i].substring(0, eq)).toLowerCase();
+      if (key === "_gl" || key === "gclid" || key === "dclid" || key === "gbraid" || key === "wbraid" || key === "gclsrc" || key.indexOf("_gcl_") === 0) {
+        dropped = true;
+      } else {
+        keep.push(parts[i]);
+      }
+    }
+    if (!dropped) return;
+    history.replaceState(history.state, "", location.pathname + (keep.length ? "?" + keep.join("&") : "") + (location.hash || ""));
+  } catch (e) {}
+})();
+</script>
 <link rel="stylesheet" href="pannellum.css">
 <style>
   html,body{margin:0;padding:0;height:100%;background:#CB7659;overflow:hidden;}
